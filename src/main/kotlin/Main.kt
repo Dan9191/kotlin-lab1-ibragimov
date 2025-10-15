@@ -15,6 +15,9 @@ fun main() {
 
     // добавление файлов
     println(root.add(docs))  //true
+    println(printTree(root))
+
+
     println(root.add(subDir)) //true
     println(docs.add(readme)) //true
     println(subDir.add(note)) //true
@@ -25,7 +28,7 @@ fun main() {
     //    - readme.txt (13 bytes)
     //    + sub/ (4 bytes total)
     //    - note.txt (4 bytes)
-    printTree(root)
+    println(printTree(root))
     // "Note"
     println(note.read())
     // 27
@@ -42,21 +45,23 @@ fun main() {
 
     //    + root/ (0 bytes total)
     //    + documents/ (0 bytes total)
-    printTree(root)
+    println(printTree(root))
 
 }
 
 /**
- * Распечатка дерева
+ * Формирует строковое представление дерева файловой системы.
  */
-fun printTree(node: FileSystemNode, indent: String = "") {
+fun printTree(node: FileSystemNode, indent: String = ""): String {
+    val builder = StringBuilder()
     if (node is File) {
-        println("$indent- ${node.name} (${node.getSize()} bytes)")
+        builder.append("$indent- ${node.name} (${node.getSize()} bytes)\n")
     } else if (node is Directory) {
-        println("$indent+ ${node.name}/ (${node.getSize()} bytes total)")
+        builder.append("$indent+ ${node.name}/ (${node.getSize()} bytes total)\n")
         val sortedChildren = node.listContents().map { node.find(it)!! }
         for (child in sortedChildren) {
-            printTree(child, "$indent  ")
+            builder.append(printTree(child, "$indent  "))
         }
     }
+    return builder.toString()
 }

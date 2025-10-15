@@ -63,6 +63,17 @@ class Directory(name: String) : FileSystemNode(name), Searchable {
         return null
     }
 
+
+    /**
+     * Очистка всех дочерних элементов корневой директории.
+     */
+    fun clearRoot() {
+        val childNames = listContents()
+        for (childName in childNames) {
+            remove(childName)
+        }
+    }
+
     companion object {
         fun createRoot(): Directory {
             return Directory("root")
