@@ -25,6 +25,9 @@ jobs:
       - name: Настройка Gradle
         uses: gradle/gradle-build-action@v3
 
+      - name: chmod for Gradle Wrapper
+        run: chmod +x ./gradlew
+
       - name: Сборка проекта
         run: ./gradlew build -x test
 
@@ -44,6 +47,9 @@ jobs:
 
       - name: Настройка Gradle
         uses: gradle/gradle-build-action@v3
+
+      - name: chmod for Gradle Wrapper
+        run: chmod +x ./gradlew
 
       - name: Запуск тестов
         run: ./gradlew test
