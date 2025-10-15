@@ -1,4 +1,4 @@
-name: Build, Test, and Push Docker
+name: Build, Test
 
 # Триггер для запуска пайплайна
 on:
