@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - master
+      - 'feature-*'
   pull_request:
     branches:
       - master
@@ -16,7 +17,7 @@ jobs:
 
     steps:
       # Это действие извлекает репозиторий из папки $GITHUB_WORKSPACE,
-      #  чтобы рабочий процесс мог получить к нему доступ.
+      # чтобы рабочий процесс мог получить к нему доступ.
       - uses: actions/checkout@v3
 
       # Настройки java
@@ -29,7 +30,7 @@ jobs:
       - name: chmod for Gradle Wrapper
         run: chmod +x ./gradlew
 
-      # билд проекта
+      # Билд проекта
       - name: Build project
         run: ./gradlew build -x test
 
@@ -51,6 +52,7 @@ jobs:
           distribution: 'temurin'
           java-version: '21'
 
+      # Права на запуск gradlew
       - name: chmod for Gradle Wrapper
         run: chmod +x ./gradlew
 
