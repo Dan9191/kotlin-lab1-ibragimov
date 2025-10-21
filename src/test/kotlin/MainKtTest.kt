@@ -142,22 +142,6 @@ class MainKtTest {
 
     @Test
     @DisplayName("Проверка формирования пути для ОС Windows")
-    fun getPath() {
-        // given
-        root = Directory.createRoot(OS.WINDOWS)
-        val docs = Directory("documents")
-        val readme = File("readme.txt", "the most important document")
-
-        // when
-        root.add(docs)
-        docs.add(readme)
-
-        //then
-        assertEquals(docs.getPath(), "C:\\root\\documents", "The file should not be added")
-    }
-
-    @Test
-    @DisplayName("Проверка формирования пути для ОС Windows")
     fun getPathForWindows() {
         // given
         root = Directory.createRoot(OS.WINDOWS)
