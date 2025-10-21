@@ -1,5 +1,6 @@
 import org.example.model.Directory
 import org.example.model.File
+import org.example.model.OS
 import org.example.printTree
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -13,11 +14,7 @@ class MainKtTest {
 
     @BeforeEach
     fun setUp() {
-        if (!::root.isInitialized) {
-            root = Directory.createRoot()
-        } else {
-            root.clearRoot()
-        }
+        root = Directory.createRoot()
 
         assertTrue(root.listContents().isEmpty(), "Root should be empty after setup")
     }
@@ -126,5 +123,51 @@ class MainKtTest {
         assertEquals(root.listContents().size, 2, "There should be a folders in the root")
         assertEquals(docs.listContents().size, 1, "There should be a folder in the root")
         assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
+    }
+
+    @Test
+    @DisplayName("Проверка добавления файлов с одинаковым именем")
+    fun add_WhenAddingFileWithDuplicateName_ShouldBeAddedNotSuccessfully() {
+        // given
+        val note = File("note.txt", "Note")
+        val note2 = File("note.txt", "Note")
+
+        // when
+        root.add(note)
+
+        //then
+        assertEquals(root.add(note2), false, "The file should not be added")
+        assertEquals(root.listContents().size, 1, "There should be a one file in the root")
+    }
+
+    @Test
+    @DisplayName("Проверка формирования пути для ОС Windows")
+    fun getPathForWindows() {
+        // given
+        root = Directory.createRoot(OS.WINDOWS)
+        val docs = Directory("documents")
+        val readme = File("readme.txt", "the most important document")
+
+        // when
+        root.add(docs)
+        docs.add(readme)
+
+        //then
+        assertEquals(docs.getPath(), "C:\\root\\documents", "The file should not be added")
+    }
+
+    @Test
+    @DisplayName("Проверка формирования пути для ОС Linux")
+    fun getPathForLinux() {
+        // given
+        val docs = Directory("documents")
+        val readme = File("readme.txt", "the most important document")
+
+        // when
+        root.add(docs)
+        docs.add(readme)
+
+        //then
+        assertEquals(docs.getPath(), "/root/documents", "The file should not be added")
     }
 }

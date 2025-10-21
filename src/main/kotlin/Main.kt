@@ -47,6 +47,9 @@ fun main() {
     //    + documents/ (0 bytes total)
     println(printTree(root))
 
+    println(docs.getPath())
+    println(root.os)
+
 }
 
 /**
