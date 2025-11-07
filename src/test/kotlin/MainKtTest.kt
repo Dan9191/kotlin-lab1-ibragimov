@@ -42,7 +42,11 @@ class MainKtTest {
 
         // then
         assertEquals(root.listContents().size, 1, "There should be a folder in the root")
-        assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
+        assertEquals(
+            printTree(root).normalizeWhitespace(),
+            expectedTree.normalizeWhitespace(),
+            "Incorrect root printout",
+        )
     }
 
     @Test
@@ -57,7 +61,11 @@ class MainKtTest {
 
         // then
         assertEquals(root.listContents().size, 1, "There should be a file in the root")
-        assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
+        assertEquals(
+            printTree(root).normalizeWhitespace(),
+            expectedTree.normalizeWhitespace(),
+            "Incorrect root printout",
+        )
     }
 
     @Test
@@ -73,7 +81,11 @@ class MainKtTest {
 
         // then
         assertEquals(root.listContents().size, 0, "The root must be empty")
-        assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
+        assertEquals(
+            printTree(root).normalizeWhitespace(),
+            expectedTree.normalizeWhitespace(),
+            "Incorrect root printout",
+        )
     }
 
     @Test
@@ -89,7 +101,11 @@ class MainKtTest {
 
         // then
         assertEquals(root.listContents().size, 0, "The root must be empty")
-        assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
+        assertEquals(
+            printTree(root).normalizeWhitespace(),
+            expectedTree.normalizeWhitespace(),
+            "Incorrect root printout",
+        )
     }
 
     @Test
@@ -119,7 +135,11 @@ class MainKtTest {
         // then
         assertEquals(root.listContents().size, 2, "There should be a folders in the root")
         assertEquals(docs.listContents().size, 1, "There should be a folder in the root")
-        assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
+        assertEquals(
+            printTree(root).normalizeWhitespace(),
+            expectedTree.normalizeWhitespace(),
+            "Incorrect root printout",
+        )
     }
 
     @Test
