@@ -5,7 +5,6 @@ import org.example.model.File
 import org.example.model.FileSystemNode
 
 fun main() {
-
     val root = Directory.createRoot()
     val docs = Directory("documents")
     val readme = File("readme.txt", "the most important document")
@@ -14,14 +13,13 @@ fun main() {
     val note2 = File("note.txt", "Note")
 
     // добавление файлов
-    println(root.add(docs))  //true
+    println(root.add(docs)) // true
     println(printTree(root))
 
-
-    println(root.add(subDir)) //true
-    println(docs.add(readme)) //true
-    println(subDir.add(note)) //true
-    println(subDir.add(note2)) //false - добавление дубликата
+    println(root.add(subDir)) // true
+    println(docs.add(readme)) // true
+    println(subDir.add(note)) // true
+    println(subDir.add(note2)) // false - добавление дубликата
 
     //    + root/ (17 bytes total)
     //    + documents/ (13 bytes total)
@@ -36,7 +34,6 @@ fun main() {
     // /root/documents/readme.txt
     println(readme.getPath())
 
-
     // Удаление файла
     docs.remove(readme.name)
 
@@ -49,13 +46,15 @@ fun main() {
 
     println(docs.getPath())
     println(root.os)
-
 }
 
 /**
  * Формирует строковое представление дерева файловой системы.
  */
-fun printTree(node: FileSystemNode, indent: String = ""): String {
+fun printTree(
+    node: FileSystemNode,
+    indent: String = "",
+): String {
     val builder = StringBuilder()
     if (node is File) {
         builder.append("$indent- ${node.name} (${node.getSize()} bytes)\n")

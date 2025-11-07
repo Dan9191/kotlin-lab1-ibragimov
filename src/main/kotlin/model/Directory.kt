@@ -1,7 +1,6 @@
 package org.example.model
 
 class Directory(name: String) : FileSystemNode(name), Searchable {
-
     private val children: MutableMap<String, FileSystemNode> = mutableMapOf()
 
     /**
@@ -47,7 +46,6 @@ class Directory(name: String) : FileSystemNode(name), Searchable {
     fun listContents(): List<String> {
         return children.keys.sorted()
     }
-
 
     override fun find(name: String): FileSystemNode? {
         if (children.containsKey(name)) {

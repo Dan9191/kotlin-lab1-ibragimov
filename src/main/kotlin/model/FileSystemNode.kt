@@ -3,8 +3,7 @@ package org.example.model
 /**
  * Абстрактный класс для представления элемента файловой системы.
  */
-abstract class FileSystemNode (val name: String) {
-
+abstract class FileSystemNode(val name: String) {
     /**
      * Тип операционной системы, по умолчанию LINUX.
      */

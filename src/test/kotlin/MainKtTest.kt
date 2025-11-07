@@ -2,14 +2,13 @@ import org.example.model.Directory
 import org.example.model.File
 import org.example.model.OS
 import org.example.printTree
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import kotlin.test.Test
 
-
 class MainKtTest {
-
     private lateinit var root: Directory
 
     @BeforeEach
@@ -24,7 +23,6 @@ class MainKtTest {
             .replace("\\s+".toRegex(), " ")
             .replace("\r\n", "\n")
     }
-
 
     @Test
     @DisplayName("Проверка создания пустого корня")
@@ -42,10 +40,9 @@ class MainKtTest {
         // when
         root.add(docs)
 
-        //then
+        // then
         assertEquals(root.listContents().size, 1, "There should be a folder in the root")
         assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
-
     }
 
     @Test
@@ -58,10 +55,9 @@ class MainKtTest {
         // when
         root.add(readme)
 
-        //then
+        // then
         assertEquals(root.listContents().size, 1, "There should be a file in the root")
         assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
-
     }
 
     @Test
@@ -75,10 +71,9 @@ class MainKtTest {
         root.add(docs)
         root.remove("documents")
 
-        //then
+        // then
         assertEquals(root.listContents().size, 0, "The root must be empty")
         assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
-
     }
 
     @Test
@@ -92,10 +87,9 @@ class MainKtTest {
         root.add(readme)
         root.remove("readme.txt")
 
-        //then
+        // then
         assertEquals(root.listContents().size, 0, "The root must be empty")
         assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
-
     }
 
     @Test
@@ -107,11 +101,14 @@ class MainKtTest {
         val subDir = Directory("sub")
         val note = File("note.txt", "Note")
 
-        val expectedTree = ("+ root/ (31 bytes total)" +
-                " + documents/ (27 bytes total)" +
-                " - readme.txt (27 bytes)" +
-                " + sub/ (4 bytes total)" +
-                " - note.txt (4 bytes)").trimMargin()
+        val expectedTree =
+            (
+                "+ root/ (31 bytes total)" +
+                    " + documents/ (27 bytes total)" +
+                    " - readme.txt (27 bytes)" +
+                    " + sub/ (4 bytes total)" +
+                    " - note.txt (4 bytes)"
+            ).trimMargin()
 
         // when
         root.add(docs)
@@ -119,7 +116,7 @@ class MainKtTest {
         docs.add(readme)
         subDir.add(note)
 
-        //then
+        // then
         assertEquals(root.listContents().size, 2, "There should be a folders in the root")
         assertEquals(docs.listContents().size, 1, "There should be a folder in the root")
         assertEquals(printTree(root).normalizeWhitespace(), expectedTree.normalizeWhitespace(), "Incorrect root printout")
@@ -135,7 +132,7 @@ class MainKtTest {
         // when
         root.add(note)
 
-        //then
+        // then
         assertEquals(root.add(note2), false, "The file should not be added")
         assertEquals(root.listContents().size, 1, "There should be a one file in the root")
     }
@@ -152,7 +149,7 @@ class MainKtTest {
         root.add(docs)
         docs.add(readme)
 
-        //then
+        // then
         assertEquals(docs.getPath(), "C:\\root\\documents", "The file should not be added")
     }
 
@@ -167,7 +164,7 @@ class MainKtTest {
         root.add(docs)
         docs.add(readme)
 
-        //then
+        // then
         assertEquals(docs.getPath(), "/root/documents", "The file should not be added")
     }
 }
