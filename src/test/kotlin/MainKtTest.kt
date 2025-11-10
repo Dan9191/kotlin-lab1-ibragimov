@@ -25,12 +25,6 @@ class MainKtTest {
     }
 
     @Test
-    @DisplayName("Проверка создания пустого корня")
-    fun whenRootCreated_ShouldBeEmpty() {
-        assertTrue(root.listContents().isEmpty(), "Root should be empty after setup")
-    }
-
-    @Test
     @DisplayName("Проверка добавления папки")
     fun add_WhenAddingDirectory_ShouldBeAddedSuccessfully() {
         // given

@@ -11,8 +11,10 @@ abstract class FileSystemNode(val name: String) {
 
     /**
      * Папка-родитель элемента.
+     * Getter публичный, setter internal.
      */
-    internal var parent: Directory? = null
+    var parent: Directory? = null
+        internal set
 
     /**
      * Размер элемента.
@@ -30,10 +32,11 @@ abstract class FileSystemNode(val name: String) {
         var current: FileSystemNode? = this
         while (current != null) {
             if (current.name.isNotEmpty()) {
-                parts.add(0, current.name)
+                parts.add(current.name)
             }
             current = current.parent
         }
+        parts.reverse()
 
         return if (parts.isEmpty()) {
             prefix + sep
