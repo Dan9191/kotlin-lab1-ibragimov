@@ -1,14 +1,16 @@
 package org.example.model
 
 class Directory(name: String) : FileSystemNode(name), Searchable {
-
     private val children: MutableMap<String, FileSystemNode> = mutableMapOf()
+    private var cachedSize: Int? = null
 
     /**
      * Рекурсивный метод нахождения суммы.
      */
     override fun getSize(): Int {
-        return children.values.sumOf { it.getSize() }
+        return cachedSize ?: children.values.sumOf { it.getSize() }.also {
+            cachedSize = it
+        }
     }
 
     /**
@@ -16,11 +18,11 @@ class Directory(name: String) : FileSystemNode(name), Searchable {
      * Для вложенного объекта проставляется родитель.
      */
     fun add(node: FileSystemNode): Boolean {
-        if (children.containsKey(node.name)) {
-            return false
-        }
+        if (children.containsKey(node.name)) return false
         children[node.name] = node
         node.parent = this
+        node.os = this.os
+        invalidateSizeCache()
         return true
     }
 
@@ -37,46 +39,39 @@ class Directory(name: String) : FileSystemNode(name), Searchable {
         }
         children.remove(name)
         node.parent = null
+        invalidateSizeCache()
         return true
     }
 
     /**
      * Список наименований дочерних элементов.
      */
-    fun listContents(): List<String> {
-        return children.keys.sorted()
-    }
-
+    fun listContents(): List<String> = children.keys.sorted()
 
     override fun find(name: String): FileSystemNode? {
-        if (children.containsKey(name)) {
-            return children[name]
-        }
+        children[name]?.let { return it }
         for (child in children.values) {
             if (child is Directory) {
                 val found = child.find(name)
-                if (found != null) {
-                    return found
-                }
+                if (found != null) return found
             }
         }
         return null
     }
 
-
     /**
-     * Очистка всех дочерних элементов корневой директории.
+     * Сброс кэша при удалении или добавлении элемента
      */
-    fun clearRoot() {
-        val childNames = listContents()
-        for (childName in childNames) {
-            remove(childName)
-        }
+    private fun invalidateSizeCache() {
+        cachedSize = null
+        parent?.invalidateSizeCache()
     }
 
     companion object {
-        fun createRoot(): Directory {
-            return Directory("root")
+        fun createRoot(os: OS = OS.LINUX): Directory {
+            val root = Directory("root")
+            root.os = os
+            return root
         }
     }
 }
